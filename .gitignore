@@ -1,0 +1,90 @@
+# ────────────────────────────────────────
+# Environment & secrets — NEVER commit these
+# ────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ────────────────────────────────────────
+# Python
+# ────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# ────────────────────────────────────────
+# Virtual environments
+# ────────────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ────────────────────────────────────────
+# Django
+# ────────────────────────────────────────
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# ────────────────────────────────────────
+# Celery
+# ────────────────────────────────────────
+celerybeat-schedule
+celerybeat-schedule.db
+celerybeat.pid
+
+# ────────────────────────────────────────
+# IDE / Editor
+# ────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ────────────────────────────────────────
+# Docker
+# ────────────────────────────────────────
+.docker/
+
+# ────────────────────────────────────────
+# Coverage / Testing
+# ────────────────────────────────────────
+htmlcov/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# ────────────────────────────────────────
+# Node (if any frontend tooling is added)
+# ────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log

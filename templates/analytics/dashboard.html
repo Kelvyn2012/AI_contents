@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Analytics — AIContent{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto py-10 px-4">
+  <h1 class="text-2xl font-bold mb-8">Analytics Dashboard</h1>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-10">
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
+      <p class="text-3xl font-bold text-indigo-600">{{ stats.total_users }}</p>
+      <p class="text-sm text-gray-500 mt-1">Active Users</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
+      <p class="text-3xl font-bold text-indigo-600">{{ stats.successful_generations }}</p>
+      <p class="text-sm text-gray-500 mt-1">Successful Generations</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
+      <p class="text-3xl font-bold text-indigo-600">{{ stats.total_words|floatformat:"0" }}</p>
+      <p class="text-sm text-gray-500 mt-1">Total Words Generated</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
+      <p class="text-3xl font-bold text-green-600">{{ stats.active_subs }}</p>
+      <p class="text-sm text-gray-500 mt-1">Pro Subscribers</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
+      <p class="text-3xl font-bold text-green-600">₦{{ stats.revenue_naira|floatformat:"0" }}</p>
+      <p class="text-sm text-gray-500 mt-1">Total Revenue</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="bg-white rounded-2xl border border-gray-200 p-6">
+      <h2 class="font-semibold mb-4">Content Types</h2>
+      {% for ct in content_types %}
+      <div class="flex justify-between py-2 border-b border-gray-50 text-sm last:border-0">
+        <span class="capitalize">{{ ct.content_type|replace:"_":" " }}</span>
+        <span class="font-semibold text-indigo-600">{{ ct.count }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-200 p-6">
+      <h2 class="font-semibold mb-4">Recent Events</h2>
+      <div class="space-y-2 text-sm">
+        {% for event in stats.recent_events %}
+        <div class="flex justify-between py-1 border-b border-gray-50 last:border-0">
+          <span class="text-gray-600">{{ event.event_type }}</span>
+          <span class="text-gray-400 text-xs">{{ event.created_at|date:"M j g:i A" }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

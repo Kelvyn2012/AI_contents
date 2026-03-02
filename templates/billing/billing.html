@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load billing_tags %}
+{% block title %}Billing — AIContent{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-10 px-4">
+  <h1 class="text-2xl font-bold mb-8">Billing & Plan</h1>
+
+  <!-- Current Plan -->
+  <div class="bg-white rounded-2xl border border-gray-200 p-8 mb-8">
+    <div class="flex items-start justify-between">
+      <div>
+        <h2 class="font-semibold text-lg mb-1">Current Plan</h2>
+        <span class="inline-block px-3 py-1 rounded-full text-sm font-bold
+          {% if summary.plan == 'pro' %}bg-indigo-100 text-indigo-700{% else %}bg-gray-100 text-gray-600{% endif %}">
+          {{ summary.plan_name|upper }}
+        </span>
+      </div>
+      {% if summary.plan == 'pro' and subscription %}
+      <div class="text-right text-sm text-gray-500">
+        <p>Renews: {{ subscription.current_period_end|date:"F j, Y" }}</p>
+        <p class="capitalize">Status: {{ subscription.status }}</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Usage -->
+    <div class="mt-6">
+      <div class="flex justify-between text-sm text-gray-600 mb-2">
+        <span>Words used this month</span>
+        <span>{{ summary.words_used|floatformat:"0" }} / {{ summary.words_limit|floatformat:"0" }}</span>
+      </div>
+      <div class="w-full bg-gray-100 rounded-full h-3">
+        <div class="h-3 rounded-full
+          {% if summary.percent_used >= 90 %}bg-red-500{% elif summary.percent_used >= 70 %}bg-yellow-500{% else %}bg-indigo-500{% endif %}"
+          style="width:{{ summary.percent_used }}%">
+        </div>
+      </div>
+      <p class="text-xs text-gray-400 mt-1">{{ summary.words_remaining|floatformat:"0" }} words remaining</p>
+    </div>
+
+    {% if summary.plan == 'free' %}
+    <!-- Upgrade CTA -->
+    <div class="mt-8 bg-indigo-50 rounded-xl p-6 border border-indigo-100">
+      <h3 class="font-bold text-indigo-800 mb-2">Upgrade to Pro — ₦5,000/month</h3>
+      <ul class="text-sm text-indigo-700 space-y-1 mb-5">
+        <li>✓ 60,000 words/month (12× more)</li>
+        <li>✓ Up to 20 projects</li>
+        <li>✓ PDF export</li>
+        <li>✓ Priority generation</li>
+      </ul>
+      <form method="post" action="{% url 'billing:checkout' %}">
+        {% csrf_token %}
+        <input type="hidden" name="plan" value="pro">
+        <button type="submit"
+          class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl">
+          Upgrade to Pro — ₦5,000/month
+        </button>
+      </form>
+      <p class="text-xs text-gray-400 mt-3">Secure payment via Paystack. Cancel anytime.</p>
+    </div>
+    {% else %}
+    <p class="mt-6 text-sm text-gray-500">
+      You are on the Pro plan. To manage or cancel your subscription, contact support.
+    </p>
+    {% endif %}
+  </div>
+
+  <!-- Payment history -->
+  {% if payments %}
+  <div class="bg-white rounded-2xl border border-gray-200 p-6">
+    <h2 class="font-semibold mb-4">Payment History</h2>
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="text-xs text-gray-400 border-b border-gray-100">
+          <th class="text-left pb-3">Reference</th>
+          <th class="text-left pb-3">Plan</th>
+          <th class="text-left pb-3">Amount</th>
+          <th class="text-left pb-3">Status</th>
+          <th class="text-left pb-3">Date</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-50">
+        {% for payment in payments %}
+        <tr class="py-3">
+          <td class="py-3 font-mono text-xs text-gray-500">{{ payment.reference|truncatechars:20 }}</td>
+          <td class="py-3 capitalize">{{ payment.plan }}</td>
+          <td class="py-3">{{ payment.amount_kobo|kobo_to_naira }}</td>
+          <td class="py-3">
+            <span class="px-2 py-0.5 rounded-full text-xs
+              {% if payment.status == 'success' %}bg-green-100 text-green-700
+              {% elif payment.status == 'failed' %}bg-red-100 text-red-700
+              {% else %}bg-gray-100 text-gray-600{% endif %}">
+              {{ payment.status }}
+            </span>
+          </td>
+          <td class="py-3 text-gray-400">{{ payment.created_at|date:"M j, Y" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

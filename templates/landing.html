@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}AIContent — Generate marketing content with AI{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<section class="bg-gradient-to-br from-indigo-600 to-purple-700 text-white py-24 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <h1 class="text-5xl font-extrabold mb-6 leading-tight">
+      Generate high-converting content<br>with AI — in seconds.
+    </h1>
+    <p class="text-xl text-indigo-100 mb-10 max-w-2xl mx-auto">
+      Blog posts, product descriptions, ad copy, email sequences —
+      tailored to your brand voice and audience.
+    </p>
+    <div class="flex justify-center gap-4">
+      <a href="{% url 'accounts:register' %}"
+         class="px-8 py-4 bg-white text-indigo-700 font-bold rounded-xl text-lg hover:bg-indigo-50 shadow-lg">
+        Start free — no credit card
+      </a>
+      <a href="#pricing"
+         class="px-8 py-4 border-2 border-white text-white font-bold rounded-xl text-lg hover:bg-white/10">
+        See pricing
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-14 text-gray-800">Everything you need to scale your content</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {% for icon, title, desc in features %}
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition">
+        <div class="text-3xl mb-4">{{ icon }}</div>
+        <h3 class="font-bold text-lg mb-2">{{ title }}</h3>
+        <p class="text-gray-500 text-sm">{{ desc }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Static features list (no context variable needed) -->
+<section class="bg-gray-50 py-16 px-4">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+      <div class="text-3xl mb-4">✍️</div>
+      <h3 class="font-bold text-lg mb-2">4 Content Templates</h3>
+      <p class="text-gray-500 text-sm">Blog posts, product descriptions, ad copy, email sequences — all in one place.</p>
+    </div>
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+      <div class="text-3xl mb-4">🏢</div>
+      <h3 class="font-bold text-lg mb-2">Brand Projects</h3>
+      <p class="text-gray-500 text-sm">Organise content by brand. Set tone, audience, and keywords once — reuse everywhere.</p>
+    </div>
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+      <div class="text-3xl mb-4">📤</div>
+      <h3 class="font-bold text-lg mb-2">Export & Edit</h3>
+      <p class="text-gray-500 text-sm">Edit your generated content inline. Export as Markdown or PDF for your workflow.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" class="py-20 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-4">Simple, transparent pricing</h2>
+    <p class="text-gray-500 mb-14">Start free. Upgrade when you need more.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Free -->
+      <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm text-left">
+        <h3 class="text-xl font-bold mb-1">Free</h3>
+        <p class="text-4xl font-extrabold mb-6">₦0 <span class="text-base font-normal text-gray-400">/month</span></p>
+        <ul class="space-y-3 text-sm text-gray-600 mb-8">
+          <li class="flex gap-2">✓ <span>5,000 words/month</span></li>
+          <li class="flex gap-2">✓ <span>3 projects</span></li>
+          <li class="flex gap-2">✓ <span>All 4 content templates</span></li>
+          <li class="flex gap-2">✓ <span>Markdown export</span></li>
+        </ul>
+        <a href="{% url 'accounts:register' %}"
+           class="block text-center py-3 px-6 rounded-xl bg-gray-100 text-gray-800 font-semibold hover:bg-gray-200">
+          Get started free
+        </a>
+      </div>
+
+      <!-- Pro -->
+      <div class="bg-indigo-600 rounded-2xl p-8 shadow-lg text-left text-white relative">
+        <span class="absolute -top-3 right-6 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full">
+          MOST POPULAR
+        </span>
+        <h3 class="text-xl font-bold mb-1">Pro</h3>
+        <p class="text-4xl font-extrabold mb-6">₦5,000 <span class="text-base font-normal text-indigo-200">/month</span></p>
+        <ul class="space-y-3 text-sm text-indigo-100 mb-8">
+          <li class="flex gap-2">✓ <span>60,000 words/month</span></li>
+          <li class="flex gap-2">✓ <span>20 projects</span></li>
+          <li class="flex gap-2">✓ <span>All 4 content templates</span></li>
+          <li class="flex gap-2">✓ <span>Markdown + PDF export</span></li>
+          <li class="flex gap-2">✓ <span>Priority generation</span></li>
+        </ul>
+        <a href="{% url 'accounts:register' %}"
+           class="block text-center py-3 px-6 rounded-xl bg-white text-indigo-700 font-bold hover:bg-indigo-50">
+          Upgrade to Pro
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

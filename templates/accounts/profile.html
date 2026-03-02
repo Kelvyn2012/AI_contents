@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Profile — AIContent{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto py-12 px-4">
+  <h1 class="text-2xl font-bold mb-8">Your Profile</h1>
+  <div class="bg-white rounded-2xl border border-gray-200 p-8 space-y-4">
+    <div><span class="text-sm text-gray-500">Username</span><p class="font-medium">{{ user.username }}</p></div>
+    <div><span class="text-sm text-gray-500">Email</span><p class="font-medium">{{ user.email }}</p></div>
+    <div><span class="text-sm text-gray-500">Company</span><p class="font-medium">{{ user.profile.company|default:"—" }}</p></div>
+    <div><span class="text-sm text-gray-500">Plan</span>
+      <p class="font-medium">
+        <span class="px-2 py-0.5 rounded-full text-sm
+          {% if user.profile.active_plan == 'pro' %}bg-indigo-100 text-indigo-700{% else %}bg-gray-100 text-gray-700{% endif %}">
+          {{ user.profile.active_plan|upper }}
+        </span>
+      </p>
+    </div>
+    <div><span class="text-sm text-gray-500">Member since</span>
+      <p class="font-medium">{{ user.date_joined|date:"F j, Y" }}</p>
+    </div>
+    <a href="{% url 'billing:billing_page' %}"
+       class="inline-block mt-4 px-5 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700">
+      Manage Billing
+    </a>
+  </div>
+</div>
+{% endblock %}
